@@ -1,0 +1,31 @@
+FROM azul/zulu-openjdk-alpine:17-latest as build
+
+WORKDIR /app
+COPY . .
+
+RUN ./gradlew --no-daemon shadowJar
+
+FROM eclipse-temurin:17 as jre-build
+
+# Create a custom Java runtime
+RUN $JAVA_HOME/bin/jlink \
+         --add-modules java.base \
+         --strip-debug \
+         --no-man-pages \
+         --no-header-files \
+         --compress=2 \
+         --output /javaruntime
+
+FROM alpine
+
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH "${JAVA_HOME}/bin:${PATH}"
+
+ENV TOKEN ""
+
+COPY --from=jre-build /javaruntime $JAVA_HOME
+
+WORKDIR /app
+COPY --from=build /app/build/libs/bot-de-la-nuit.jar /app/bot-de-la-nuit.jar
+
+CMD ["java", "-jar", "/app/bot-de-la-nuit.jar", "${TOKEN}"]
