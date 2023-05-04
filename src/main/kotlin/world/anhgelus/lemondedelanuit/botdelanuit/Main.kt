@@ -1,3 +1,5 @@
+package world.anhgelus.lemondedelanuit.botdelanuit
+
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
 import java.util.*
