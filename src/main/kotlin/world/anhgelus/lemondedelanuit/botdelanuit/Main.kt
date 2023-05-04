@@ -10,5 +10,6 @@ fun main(args: Array<String>) {
 
     val discord = JDABuilder.createDefault(args[0])
         .enableIntents(EnumSet.allOf(GatewayIntent::class.java))
+        .setActivity(Manager.generateActivity(config))
         .build()
 }

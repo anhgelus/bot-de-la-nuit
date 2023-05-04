@@ -1,3 +1,10 @@
+[settings]
+
+[settings.status]
+
+type = ""
+content = ""
+
 [db]
 
 dbType = ""
