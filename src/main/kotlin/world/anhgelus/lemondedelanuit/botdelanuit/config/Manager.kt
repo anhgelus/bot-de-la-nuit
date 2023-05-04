@@ -10,12 +10,20 @@ object Manager {
     const val configFolderPath = "config/"
     const val configName = "config.toml"
 
+    /**
+     * Get the config from the files
+     */
     fun getConfig(): Config {
         val mapper = tomlMapper { }
         val tomlFile = Path.of(configFolderPath+ configName)
         return mapper.decode<Config>(tomlFile)
     }
 
+    /**
+     * Generate the activity from the config
+     *
+     * @property config the config file
+     */
     fun generateActivity(config: Config): Activity {
         val status = config.settings.status
         return when(status.type) {

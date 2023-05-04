@@ -12,4 +12,6 @@ fun main(args: Array<String>) {
         .enableIntents(EnumSet.allOf(GatewayIntent::class.java))
         .setActivity(Manager.generateActivity(config))
         .build()
+
+    println("Bot connected!")
 }
