@@ -1,5 +1,12 @@
 [settings]
 
+guild = 1234567891011121314
+
+[settings.verify]
+
+role = 1234567891011121314
+welcome_channel = 1234567891011121314
+
 [settings.status]
 
 type = ""
