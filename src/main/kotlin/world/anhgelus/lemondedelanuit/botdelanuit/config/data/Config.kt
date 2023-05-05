@@ -16,7 +16,7 @@ data class Config(
      * @property password the password of the user
      * @property dbName the name of the db
      */
-    data class DB(val dbType: String, val host: String, val port: Short, val user: String, val password: String,
+    data class DB(val dbType: String, val host: String, val port: Int, val user: String, val password: String,
                   val dbName: String)
 
     /**

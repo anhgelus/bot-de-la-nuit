@@ -4,6 +4,11 @@ import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
 import net.dv8tion.jda.api.entities.Activity
 import world.anhgelus.lemondedelanuit.botdelanuit.config.data.Config
+import world.anhgelus.lemondedelanuit.botdelanuit.utils.file.Resources
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileWriter
+import java.nio.file.NoSuchFileException
 import java.nio.file.Path
 
 object Manager {
@@ -15,8 +20,25 @@ object Manager {
      */
     fun getConfig(): Config {
         val mapper = tomlMapper { }
-        val tomlFile = Path.of(configFolderPath+ configName)
-        return mapper.decode<Config>(tomlFile)
+        val path = "$configFolderPath$configName"
+        val tomlFile = Path.of(path)
+        return try {
+            mapper.decode<Config>(tomlFile)
+        } catch (e: NoSuchFileException) {
+            println("File not found, creating it")
+            val file = File(path)
+            val dir = File(configFolderPath)
+            if (!dir.exists()) {
+                assert(dir.mkdir())
+            }
+            if (!file.createNewFile()) {
+                throw IllegalStateException("Impossible to create the file with the path $path")
+            }
+            val writer = FileWriter(path)
+            writer.write(Resources.getResourceFileAsString("/examples/config/config.toml")!!)
+            writer.close()
+            mapper.decode<Config>(file.toPath())
+        }
     }
 
     /**
@@ -26,6 +48,12 @@ object Manager {
      */
     fun generateActivity(config: Config): Activity {
         val status = config.settings.status
+        if (status.type == "") {
+            throw IllegalArgumentException("Status type not set")
+        }
+        if (status.content == "") {
+            throw IllegalArgumentException("Status content not set")
+        }
         return when(status.type) {
             "watching" -> Activity.watching(status.content)
             "playing" -> Activity.playing(status.content)
