@@ -39,4 +39,5 @@ bin/
 .DS_Store
 
 .env
-config
+config/
+!**/src/main/**/config/

@@ -1,9 +1,12 @@
 package world.anhgelus.lemondedelanuit.botdelanuit.config
 
+import cc.ekblad.toml.TomlMapper
+import cc.ekblad.toml.configuration.TomlMapperConfigurator
 import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
 import net.dv8tion.jda.api.entities.Activity
 import world.anhgelus.lemondedelanuit.botdelanuit.config.data.Config
+import world.anhgelus.lemondedelanuit.botdelanuit.config.data.Messages
 import world.anhgelus.lemondedelanuit.botdelanuit.utils.file.Resources
 import java.io.File
 import java.io.FileNotFoundException
@@ -14,6 +17,7 @@ import java.nio.file.Path
 object Manager {
     const val configFolderPath = "config/"
     const val configName = "config.toml"
+    const val messagesName = "messages.toml"
 
     /**
      * Get the config from the files
@@ -22,10 +26,14 @@ object Manager {
         val mapper = tomlMapper {
             mapping<Config.Verify>("welcome_channel" to "welcomeChannel")
         }
-        val path = "$configFolderPath$configName"
+        return getConfig<Config>(configName, mapper)
+    }
+
+    private inline fun <reified T> getConfig(name: String, mapper: TomlMapper): T {
+        val path = "$configFolderPath$name"
         val tomlFile = Path.of(path)
         return try {
-            mapper.decode<Config>(tomlFile)
+            mapper.decode<T>(tomlFile)
         } catch (e: NoSuchFileException) {
             println("File not found, creating it")
             val file = File(path)
@@ -37,9 +45,9 @@ object Manager {
                 throw IllegalStateException("Impossible to create the file with the path $path")
             }
             val writer = FileWriter(path)
-            writer.write(Resources.getResourceFileAsString("/examples/config/config.toml")!!)
+            writer.write(Resources.getResourceFileAsString("/examples/$path")!!)
             writer.close()
-            mapper.decode<Config>(file.toPath())
+            mapper.decode<T>(file.toPath())
         }
     }
 
