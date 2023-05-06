@@ -29,6 +29,29 @@ object Manager {
         return getConfig<Config>(configName, mapper)
     }
 
+    /**
+     * Get the messages' config from the files
+     */
+    fun getMessagesConfig(): Messages {
+        val mapper = tomlMapper {
+            mapping<Messages.ErrorCommon>("bad_permissions" to "badPermissions")
+            mapping<Messages.ErrorCommon>("not_set" to "notSet")
+            mapping<Messages.ErrorArgument>("not_specified" to "notSpecified")
+            mapping<Messages.CommandVerify>("embed_broadcast" to "embedBroadcast")
+            mapping<Messages.CommandVerifyError>("welcome_channel_not_set" to "welcomeChannelNotSet")
+            mapping<Messages.CommandVerifyError>("user_already_verified" to "userAlreadyVerified")
+            mapping<Messages.CommandVerifyContent>("user_option" to "userOption")
+        }
+        return getConfig<Messages>(messagesName, mapper)
+    }
+
+    /**
+     * Get the config from the files
+     * @param name the config file's name
+     * @param mapper the mapper to use
+     * @property T the config type
+     * @return the config
+     */
     private inline fun <reified T> getConfig(name: String, mapper: TomlMapper): T {
         val path = "$configFolderPath$name"
         val tomlFile = Path.of(path)

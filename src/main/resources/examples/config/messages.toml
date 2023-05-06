@@ -1,0 +1,25 @@
+[error]
+    [error.common]
+        bad_permissions = "You don't have permission to do that."
+
+        [error.common.not_set]
+            verified = "The verified role is not set."
+            admin = "The admin role is not set."
+            mod = "The mod role is not set."
+
+    [error.argument]
+        [error.argument.not_specified]
+            user = "You must specify a user."
+
+[command]
+    [command.verify]
+        description = "Verify a user"
+        reply = "The user {user.mention} is now verified."
+        embed_broadcast = "Welcome {user.mention} in {guild.name}!"
+
+        [command.verify.error]
+            welcome_channel_not_set = "The welcome channel is not set."
+            user_already_verified = "The user is already verified."
+
+        [command.verify.content]
+            user_option = "The user to verify"

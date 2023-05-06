@@ -40,4 +40,4 @@ bin/
 
 .env
 config/
-!**/src/main/**/config/
+!/src/main/**/config/

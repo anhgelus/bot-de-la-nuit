@@ -15,6 +15,7 @@ import kotlin.collections.HashMap
 
 fun main(args: Array<String>) {
     val config = Manager.getConfig()
+    val messages = Manager.getMessagesConfig()
 
     val commands = HashMap<String, BaseCommand>()
     commands[Verify.name] = Verify
@@ -27,6 +28,7 @@ fun main(args: Array<String>) {
         .awaitReady()
 
     SO.setConfig(config)
+    SO.setMessages(messages)
 
     setupCommands(discord, config, commands)
 
