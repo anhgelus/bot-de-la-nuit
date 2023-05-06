@@ -8,4 +8,4 @@ ENV TOKEN ""
 
 RUN ./gradlew --no-daemon shadowJar
 
-CMD ["java", "-jar", "/app/build/libs/bot-de-la-nuit.jar", "${TOKEN}"]
+CMD java -jar /app/build/libs/bot-de-la-nuit.jar $TOKEN
