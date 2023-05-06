@@ -15,7 +15,8 @@
     [command.verify]
         description = "Verify a user"
         reply = "The user {user.mention} is now verified."
-        embed_broadcast = "Welcome {user.mention} in {guild.name}!"
+        embed_broadcast = "Welcome {user.mention} to {guild.name}!"
+        dm = "You were verified by our staff! Welcome to {guild.name}!"
 
         [command.verify.error]
             welcome_channel_not_set = "The welcome channel is not set."

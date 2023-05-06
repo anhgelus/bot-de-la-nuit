@@ -46,7 +46,7 @@ data class Messages(
      * @property content the verify command options' content
      */
     data class CommandVerify(val description: String, val reply: String, val embedBroadcast: String,
-                             val error: CommandVerifyError, val content: CommandVerifyContent)
+                             val error: CommandVerifyError, val content: CommandVerifyContent, val dm: String)
 
     /**
      * @property welcomeChannelNotSet the welcome channel was not set error

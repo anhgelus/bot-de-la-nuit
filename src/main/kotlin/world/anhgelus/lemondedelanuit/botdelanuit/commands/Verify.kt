@@ -43,6 +43,11 @@ object Verify : BaseCommand() {
         }
         member.guild.addRoleToMember(member, verified).queue()
 
+        member.user.openPrivateChannel()
+            .flatMap { channel ->
+                channel.sendMessage(MessageParser.parseMessage(messages.command.verify.dm, Context(member, guild, channel))) }
+            .queue()
+
         val channel = guild.getTextChannelById(config.settings.verify.welcomeChannel)
         if (channel == null) {
             event.reply(messages.command.verify.error.welcomeChannelNotSet).setEphemeral(true).complete()
