@@ -1,16 +1,17 @@
 [settings]
+    guild = 1234567891011121314
 
-guild = 1234567891011121314
+    [settings.verify]
+        welcome_channel = 1234567891011121314
 
-[settings.verify]
+    [settings.roles]
+        verified = 1234567891011121314
+        admin = 1234567891011121314
+        mod = 1234567891011121314
 
-role = 1234567891011121314
-welcome_channel = 1234567891011121314
-
-[settings.status]
-
-type = ""
-content = ""
+    [settings.status]
+        type = ""
+        content = ""
 
 [db]
 

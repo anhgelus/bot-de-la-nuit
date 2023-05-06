@@ -9,6 +9,7 @@ import world.anhgelus.lemondedelanuit.botdelanuit.config.Manager
 import world.anhgelus.lemondedelanuit.botdelanuit.config.data.Config
 import world.anhgelus.lemondedelanuit.botdelanuit.event.SlashCommands
 import world.anhgelus.lemondedelanuit.botdelanuit.utils.Commands
+import world.anhgelus.lemondedelanuit.botdelanuit.utils.SO
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -23,8 +24,13 @@ fun main(args: Array<String>) {
         .setActivity(Manager.generateActivity(config))
         .addEventListeners(SlashCommands(commands))
         .build()
+        .awaitReady()
 
-    println("Bot connected!")
+    SO.setConfig(config)
+
+    setupCommands(discord, config, commands)
+
+    println("Bot started and connected!")
 }
 
 private fun setupCommands(discord: JDA, config: Config, commands: Map<String, BaseCommand>) {

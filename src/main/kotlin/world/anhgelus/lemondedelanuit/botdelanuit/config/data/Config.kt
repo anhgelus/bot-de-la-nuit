@@ -26,13 +26,19 @@ data class Config(
     data class Status(val type: String, val content: String)
 
     /**
-     * @property role the role with the capacity to verify
      * @property welcomeChannel the welcoming channel
      */
-    data class Verify(val role: Long, val welcomeChannel: Long)
+    data class Verify(val welcomeChannel: Long)
+
+    /**
+     * @property admin the admin role id
+     * @property mod the mod role id
+     * @property verified the verified role id
+     */
+    data class Roles(val admin: Long, val mod: Long, val verified: Long)
 
     /**
      * @property status the settings of the status
      */
-    data class Settings(val status: Status, val guild: Long, val verify: Verify)
+    data class Settings(val status: Status, val guild: Long, val verify: Verify, val roles: Roles)
 }

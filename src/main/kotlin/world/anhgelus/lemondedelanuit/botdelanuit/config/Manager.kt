@@ -19,7 +19,9 @@ object Manager {
      * Get the config from the files
      */
     fun getConfig(): Config {
-        val mapper = tomlMapper { }
+        val mapper = tomlMapper {
+            mapping<Config.Verify>("welcome_channel" to "welcomeChannel")
+        }
         val path = "$configFolderPath$configName"
         val tomlFile = Path.of(path)
         return try {
